@@ -13,7 +13,7 @@ export function Header() {
         <IconPlus />
       </button>
       <span className="font-instagram text-[28px] leading-none tracking-wide text-white select-none">
-        Dobrogram
+        {/* Dobrogram */}
       </span>
       <NavLink
         to="/profile"
