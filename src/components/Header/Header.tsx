@@ -5,13 +5,13 @@ import { IconPlus } from '../icons/Icons'
 export function Header() {
   return (
     <header className="flex h-11 items-center justify-between bg-black px-4 py-2.5">
-      <button
-        type="button"
-        className="flex cursor-pointer items-center justify-center border-0 bg-transparent p-0 text-white"
-        aria-label="Создать"
+      <NavLink
+        to="/news"
+        className="flex cursor-pointer items-center justify-center text-white"
+        aria-label="Новости"
       >
         <IconPlus />
-      </button>
+      </NavLink>
       <span className="font-instagram text-[28px] leading-none tracking-wide text-white select-none">
         {/* Dobrogram */}
       </span>
