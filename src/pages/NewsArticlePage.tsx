@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom'
+import centerImage from '../assets/center.png'
+import houseImage from '../assets/image.png'
+import clubImage from '../assets/image1.png'
 import { IconBack } from '../components/icons/Icons'
 
 export function NewsArticlePage() {
@@ -25,9 +28,11 @@ export function NewsArticlePage() {
         </h1>
 
         <div className="mb-5 aspect-[16/10] overflow-hidden rounded-xl bg-[#262626]">
-          <div className="flex h-full w-full items-center justify-center text-sm text-[#737373]">
-            Фото будет добавлено
-          </div>
+          <img
+            src={centerImage}
+            alt="Йога-клуб «Алый Лотос»"
+            className="h-full w-full object-cover"
+          />
         </div>
 
         <p className="mb-4 text-[17px] leading-relaxed font-medium text-white">
@@ -41,6 +46,13 @@ export function NewsArticlePage() {
             предварительным данным, женщина скончалась от ножевых ранений. Место происшествия
             оцеплено, следственная группа работает на месте.
           </p>
+          <div className="overflow-hidden rounded-xl bg-[#262626]">
+            <img
+              src={clubImage}
+              alt="Дом Полины Никоновой"
+              className="h-auto w-full"
+            />
+          </div>
           <p>
             Дом Никоновой расположен в тихом районе на окраине Энска — одноэтажный особняк с
             небольшим садом за высоким забором. Именно туда утром приехала помощница по хозяйству,
@@ -56,6 +68,13 @@ export function NewsArticlePage() {
             ни звука работающего автомобиля.
           </p>
 
+          <div className="aspect-[16/10] overflow-hidden rounded-xl bg-[#262626]">
+            <img
+              src={houseImage}
+              alt="Йога-клуб «Алый Лотос»"
+              className="h-full w-full object-cover"
+            />
+          </div>
           <h2 className="pt-2 text-lg font-semibold text-white">
             «Алый Лотос» — клуб, который знали все в Энске
           </h2>
