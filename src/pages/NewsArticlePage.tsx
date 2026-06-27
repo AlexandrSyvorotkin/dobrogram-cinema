@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom'
-import centerImage from '../assets/center.png'
-import houseImage from '../assets/image.png'
+import centerImage from '../assets/image.png'
+import houseImage from '../assets/image2.png'
 import clubImage from '../assets/image1.png'
 import { IconBack } from '../components/icons/Icons'
 
 export function NewsArticlePage() {
   return (
-    <main className="flex-1 pb-8">
-      <header className="sticky top-0 z-100 flex h-11 items-center gap-3 bg-black px-4 py-2.5">
+    <main className="flex-1 bg-white pb-8 text-black">
+      <header className="sticky top-0 z-100 flex h-11 items-center gap-3 bg-white px-4 py-2.5">
         <Link
           to="/"
-          className="flex cursor-pointer items-center justify-center text-white"
+          className="flex cursor-pointer items-center justify-center text-black"
           aria-label="Назад"
         >
           <IconBack />
         </Link>
-        <span className="text-sm font-semibold text-white">Новости</span>
+        <span className="text-sm font-semibold text-black">Новости</span>
       </header>
 
       <article className="px-4 pt-2">
@@ -23,7 +23,7 @@ export function NewsArticlePage() {
           Энск · Происшествия
         </p>
 
-        <h1 className="mb-4 text-[22px] leading-tight font-bold text-white">
+        <h1 className="mb-4 text-[22px] leading-tight font-bold text-black">
           В Энске убита владелица йога-клуба «Алый Лотос»
         </h1>
 
@@ -35,12 +35,12 @@ export function NewsArticlePage() {
           />
         </div>
 
-        <p className="mb-4 text-[17px] leading-relaxed font-medium text-white">
+        <p className="mb-4 text-[17px] leading-relaxed font-medium text-black">
           Владелица йога-клуба «Алый Лотос» Полина Никонова найдена убитой в собственном доме…
           Полиция ситуацию не комментирует.
         </p>
 
-        <div className="space-y-4 text-[15px] leading-relaxed text-[#dbdbdb]">
+        <div className="space-y-4 text-[15px] leading-relaxed text-black">
           <p>
             Тело 34-летней Полины Никоновой обнаружили в её частном доме в городе Энск. По
             предварительным данным, женщина скончалась от ножевых ранений. Место происшествия
@@ -75,7 +75,7 @@ export function NewsArticlePage() {
               className="h-full w-full object-cover"
             />
           </div>
-          <h2 className="pt-2 text-lg font-semibold text-white">
+          <h2 className="pt-2 text-lg font-semibold text-black">
             «Алый Лотос» — клуб, который знали все в Энске
           </h2>
           <p>
@@ -103,7 +103,7 @@ export function NewsArticlePage() {
             практику. Приходите — будет тепло». Утром занятие так и не началось.
           </p>
 
-          <h2 className="pt-2 text-lg font-semibold text-white">Что известно о расследовании</h2>
+          <h2 className="pt-2 text-lg font-semibold text-black">Что известно о расследовании</h2>
           <p>
             По информации источников, близких к следствию, в доме не было признаков взлома: замки
             целы, сигнализация не срабатывала. Это наводит следователей на мысль, что Никонова
@@ -127,7 +127,7 @@ export function NewsArticlePage() {
             продолжается, версии следствия не разглашаются.
           </p>
 
-          <h2 className="pt-2 text-lg font-semibold text-white">Реакция города</h2>
+          <h2 className="pt-2 text-lg font-semibold text-black">Реакция города</h2>
           <p>
             Новость о гибели Полины Никоновой быстро разошлась по Энску. У входа в «Алый Лотос»
             люди приносят цветы, свечи и записки с словами благодарности. Запись на ближайшие
@@ -160,7 +160,7 @@ export function NewsArticlePage() {
             вызовут следователи.
           </p>
 
-          <h2 className="pt-2 text-lg font-semibold text-white">Что будет дальше</h2>
+          <h2 className="pt-2 text-lg font-semibold text-black">Что будет дальше</h2>
           <p>
             Следственная группа опрашивает соседей, клиентов клуба и всех, кто мог видеть
             Никонову в последние дни. Проверяются её телефонные переписки, финансовые операции
@@ -178,7 +178,7 @@ export function NewsArticlePage() {
             убийство произошло в тихом, считавшемся безопасным районе, и многие задаются
             вопросом, не находится ли преступник по-прежнему среди них.
           </p>
-          <p className="pb-4 text-[#737373]">
+          <p className="pb-4 text-black">
             Материал подготовлен редакцией. Информация уточняется.
           </p>
         </div>

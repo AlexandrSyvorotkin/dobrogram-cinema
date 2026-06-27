@@ -6,7 +6,9 @@ export function AppLayout() {
   const hideBottomNav = pathname === '/news'
 
   return (
-    <div className="relative flex min-h-dvh w-full max-w-[430px] flex-col bg-black">
+    <div
+      className={`relative flex min-h-dvh w-full max-w-[430px] flex-col ${hideBottomNav ? 'bg-white' : 'bg-black'}`}
+    >
       <Outlet />
       {!hideBottomNav && <BottomNav />}
     </div>
