@@ -28,3 +28,27 @@ body {
   justify-content: center;
   background: #000;
 }
+
+@keyframes countdown-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.taxi-yandex-map [class*='copyright'],
+.taxi-yandex-map [class*='gotoymaps'],
+.taxi-yandex-map [class*='gototech'],
+.taxi-yandex-map [class*='map-copyrights'],
+.taxi-yandex-map a[href*='yandex.ru/maps'],
+.taxi-yandex-map a[href*='yandex.com/maps'] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
