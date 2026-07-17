@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { TAXI_DEMO_ORDER } from '../data/taxiOrder'
-import { playTaxiOrderSound, playTaxiRouteSound } from '../lib/taxiOrderSound'
+import { playTaxiOrderSound, playTaxiRouteSound, unlockTaxiSounds } from '../lib/taxiOrderSound'
 import { OrderCard } from '../components/Taxi/OrderCard'
 import { OrderCountdownOverlay } from '../components/Taxi/OrderCountdownOverlay'
 import {
@@ -175,6 +175,7 @@ export function TaxiPage() {
   const handleSimulateOrder = () => {
     if (orderPhase !== 'idle') return
 
+    unlockTaxiSounds()
     setOrderPhase('countdown')
   }
 
