@@ -12,8 +12,8 @@ export const TAXI_DEMO_ORDER = {
     coords: [55.0798, 82.9586] as [number, number],
   },
   destination: {
-    title: 'улица Шевченко, 19/1к2',
-    subtitle: 'Энск',
+    title: 'улица Лобачевского, 17',
+    subtitle: 'Э',
     coords: [55.0656, 82.9274] as [number, number],
   },
   price: '512 ₽',
