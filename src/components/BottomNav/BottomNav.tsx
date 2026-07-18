@@ -13,7 +13,7 @@ export function BottomNav() {
       className="fixed bottom-5 left-1/2 z-200 flex h-14 w-[calc(100%-32px)] max-w-[398px] -translate-x-1/2 items-center justify-around rounded-[28px] bg-[rgba(38,38,38,0.95)] px-2 backdrop-blur-md"
       aria-label="Навигация"
     >
-      <NavLink to="/" end className={navLinkClass} aria-label="Главная">
+      <NavLink to="/feed" end className={navLinkClass} aria-label="Главная">
         <IconHome />
       </NavLink>
       <NavLink to="/reels" className={navLinkClass} aria-label="Reels">
