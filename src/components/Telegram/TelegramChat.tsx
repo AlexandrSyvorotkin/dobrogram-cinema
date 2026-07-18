@@ -247,6 +247,8 @@ export function TelegramChat() {
     scrollToBottom()
   }, [messages.length, scrollToBottom])
 
+  const releaseListenersRef = useRef<(() => void) | null>(null)
+
   const clearRecordingInterval = useCallback(() => {
     if (intervalRef.current !== null) {
       window.clearInterval(intervalRef.current)
@@ -254,10 +256,17 @@ export function TelegramChat() {
     }
   }, [])
 
+  const detachReleaseListeners = useCallback(() => {
+    if (!releaseListenersRef.current) return
+    releaseListenersRef.current()
+    releaseListenersRef.current = null
+  }, [])
+
   const finishRecording = useCallback(() => {
     if (!isRecordingActiveRef.current) return
     isRecordingActiveRef.current = false
     clearRecordingInterval()
+    detachReleaseListeners()
 
     const snapshot = recordingRef.current
     recordingRef.current = null
@@ -276,7 +285,7 @@ export function TelegramChat() {
       },
     ])
     scheduleIncomingReply()
-  }, [clearRecordingInterval, scheduleIncomingReply])
+  }, [clearRecordingInterval, detachReleaseListeners, scheduleIncomingReply])
 
   const startRecording = useCallback(() => {
     if (isRecordingActiveRef.current) return
@@ -303,32 +312,36 @@ export function TelegramChat() {
         return next
       })
     }, BAR_INTERVAL_MS)
-  }, [])
+
+    detachReleaseListeners()
+    const finish = () => finishRecording()
+    window.addEventListener('pointerup', finish)
+    window.addEventListener('pointercancel', finish)
+    window.addEventListener('touchend', finish)
+    releaseListenersRef.current = () => {
+      window.removeEventListener('pointerup', finish)
+      window.removeEventListener('pointercancel', finish)
+      window.removeEventListener('touchend', finish)
+    }
+  }, [detachReleaseListeners, finishRecording])
 
   useEffect(
     () => () => {
       clearRecordingInterval()
+      detachReleaseListeners()
       clearReplyTimeout()
     },
-    [clearRecordingInterval, clearReplyTimeout],
+    [clearRecordingInterval, detachReleaseListeners, clearReplyTimeout],
   )
 
   const handleMicPointerDown = (event: ReactPointerEvent<HTMLButtonElement>) => {
     event.preventDefault()
     unlockTelegramSounds()
-    event.currentTarget.setPointerCapture(event.pointerId)
     startRecording()
   }
 
-  const handleMicPointerUp = (event: ReactPointerEvent<HTMLButtonElement>) => {
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId)
-    }
-    finishRecording()
-  }
-
   return (
-    <div className="telegram-bg flex h-dvh max-h-dvh w-full flex-col overflow-hidden bg-[#0E1621]">
+    <div className="telegram-bg relative flex h-dvh max-h-dvh w-full flex-col overflow-hidden bg-[#0E1621]">
       <header className="z-10 flex shrink-0 items-center gap-1 border-b border-white/5 bg-[rgba(23,33,43,0.94)] px-1 py-2 backdrop-blur-md">
         <button type="button" className="flex items-center pl-0.5" aria-label="Назад">
           <IconChevronBack />
@@ -349,7 +362,7 @@ export function TelegramChat() {
 
       <div
         ref={messagesRef}
-        className="no-scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-3 pt-2 pb-2"
+        className="no-scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-3 pt-2 pb-28"
       >
         <div className="min-h-0 flex-1" aria-hidden="true" />
 
@@ -371,48 +384,47 @@ export function TelegramChat() {
         <div ref={messagesEndRef} />
       </div>
 
-      <footer
-        className={`z-10 flex shrink-0 items-end gap-2 border-t border-white/5 px-4 pb-[max(8px,env(safe-area-inset-bottom))] pt-2 backdrop-blur-md transition-colors ${
-          recording ? 'bg-[rgba(35,24,48,0.98)]' : 'bg-[rgba(23,33,43,0.96)]'
-        }`}
-      >
-        {!recording && (
-          <button type="button" className="mb-0.5 shrink-0 p-1" aria-label="Прикрепить">
-            <IconAttach />
-          </button>
-        )}
-
-        {recording ? (
-          <div className="mb-0.5 flex min-h-[36px] flex-1 items-center gap-2.5 rounded-[20px] bg-[#17212B] px-3 py-1.5">
-            <span className="relative flex h-2.5 w-2.5 shrink-0">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff3040] opacity-60" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#ff3040]" />
-            </span>
-            <span className="min-w-[36px] shrink-0 text-[17px] font-medium tabular-nums text-white">
-              {formatVoiceDuration(recording.elapsedMs)}
-            </span>
-            <span className="flex-1 truncate text-center text-[15px] text-white/50">Отпустите для отправки</span>
-          </div>
-        ) : (
-          <div className="flex min-h-[36px] flex-1 items-center rounded-[20px] bg-[#17212B] px-3 py-1.5">
-            <span className="flex-1 text-[17px] text-[#8E8E93]">Сообщение</span>
-            <button type="button" className="shrink-0" aria-label="Эмодзи">
-              <IconEmoji />
-            </button>
-          </div>
-        )}
-
-        <button
-          type="button"
-          className="mb-0.5 shrink-0 touch-none p-1 select-none"
-          aria-label={recording ? 'Отпустите для отправки' : 'Зажмите для записи голосового'}
-          onPointerDown={handleMicPointerDown}
-          onPointerUp={handleMicPointerUp}
-          onPointerCancel={handleMicPointerUp}
-          onLostPointerCapture={finishRecording}
+      <footer className="pointer-events-none absolute inset-x-0 bottom-[max(20px,env(safe-area-inset-bottom))] z-30 px-7">
+        <div
+          className={`pointer-events-auto flex items-end gap-2.5 rounded-[26px] border border-white/8 px-4 py-2.5 shadow-[0_10px_40px_rgba(0,0,0,0.55)] backdrop-blur-xl transition-colors ${
+            recording ? 'bg-[rgba(35,24,48,0.98)]' : 'bg-[rgba(23,33,43,0.96)]'
+          }`}
         >
-          {recording ? <IconMicRecording /> : <IconMic />}
-        </button>
+          {!recording && (
+            <button type="button" className="mb-0.5 shrink-0 p-1.5" aria-label="Прикрепить">
+              <IconAttach />
+            </button>
+          )}
+
+          {recording ? (
+            <div className="mb-0.5 flex min-h-[40px] flex-1 items-center gap-2.5 rounded-[22px] bg-[#17212B] px-3.5 py-2">
+              <span className="relative flex h-2.5 w-2.5 shrink-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff3040] opacity-60" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#ff3040]" />
+              </span>
+              <span className="min-w-[36px] shrink-0 text-[17px] font-medium tabular-nums text-white">
+                {formatVoiceDuration(recording.elapsedMs)}
+              </span>
+              <span className="flex-1 truncate text-center text-[15px] text-white/50">Отпустите для отправки</span>
+            </div>
+          ) : (
+            <div className="flex min-h-[40px] flex-1 items-center rounded-[22px] bg-[#17212B] px-3.5 py-2">
+              <span className="flex-1 text-[17px] text-[#8E8E93]">Сообщение</span>
+              <button type="button" className="shrink-0 p-0.5" aria-label="Эмодзи">
+                <IconEmoji />
+              </button>
+            </div>
+          )}
+
+          <button
+            type="button"
+            className="mb-0.5 shrink-0 touch-none p-1.5 select-none"
+            aria-label={recording ? 'Отпустите для отправки' : 'Зажмите для записи голосового'}
+            onPointerDown={handleMicPointerDown}
+          >
+            {recording ? <IconMicRecording /> : <IconMic />}
+          </button>
+        </div>
       </footer>
     </div>
   )
