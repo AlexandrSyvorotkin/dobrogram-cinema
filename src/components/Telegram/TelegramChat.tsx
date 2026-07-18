@@ -333,9 +333,11 @@ export function TelegramChat() {
         <button type="button" className="flex items-center pl-0.5" aria-label="Назад">
           <IconChevronBack />
         </button>
-        <span className="rounded-full bg-[rgba(255,255,255,0.12)] px-2 py-0.5 text-[13px] font-semibold text-white">
-          {chatContact.unreadCount}
-        </span>
+        {chatContact.unreadCount > 0 && (
+          <span className="rounded-full bg-[rgba(255,255,255,0.12)] px-2 py-0.5 text-[13px] font-semibold text-white">
+            {chatContact.unreadCount}
+          </span>
+        )}
 
         <div className="ml-1 min-w-0 flex-1">
           <p className="truncate text-[17px] font-semibold leading-tight text-white">{chatContact.name}</p>
@@ -343,33 +345,34 @@ export function TelegramChat() {
             {recording ? 'запись…' : chatContact.status}
           </p>
         </div>
-
-        <img
-          src={chatContact.avatar}
-          alt=""
-          className="mr-1 h-9 w-9 shrink-0 rounded-full object-cover"
-        />
       </header>
 
-      <div ref={messagesRef} className="no-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 pt-2 pb-2">
-        {messages.map((item, index) => (
-          <ChatMessage key={index} item={item} />
-        ))}
+      <div
+        ref={messagesRef}
+        className="no-scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-3 pt-2 pb-2"
+      >
+        <div className="min-h-0 flex-1" aria-hidden="true" />
 
-        {recording && (
-          <VoiceBubble
-            duration={formatVoiceDuration(recording.elapsedMs)}
-            time=""
-            bars={recording.bars}
-            recording
-          />
-        )}
+        <div className="shrink-0">
+          {messages.map((item, index) => (
+            <ChatMessage key={index} item={item} />
+          ))}
+
+          {recording && (
+            <VoiceBubble
+              duration={formatVoiceDuration(recording.elapsedMs)}
+              time=""
+              bars={recording.bars}
+              recording
+            />
+          )}
+        </div>
 
         <div ref={messagesEndRef} />
       </div>
 
       <footer
-        className={`z-10 flex shrink-0 items-end gap-2 border-t border-white/5 px-2 py-2 backdrop-blur-md transition-colors ${
+        className={`z-10 flex shrink-0 items-end gap-2 border-t border-white/5 px-4 pb-[max(8px,env(safe-area-inset-bottom))] pt-2 backdrop-blur-md transition-colors ${
           recording ? 'bg-[rgba(35,24,48,0.98)]' : 'bg-[rgba(23,33,43,0.96)]'
         }`}
       >

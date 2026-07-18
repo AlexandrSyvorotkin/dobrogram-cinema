@@ -31,5 +31,4 @@ export function playTelegramIncomingSound() {
 
 export const INCOMING_VOICE_REPLY_DELAY_MS = 5000
 
-export const incomingVoiceReplyText =
-  'блин ну ты прикинь там короче полный треш ахахах я до сих пор не понимаю как это вообще случилось типа серьёзно??? потом этот чел подошёл и такой "вы кто" а мы ну сами понимаете лол'
+export const incomingVoiceReplyText = 'Хорошо, сегодня приеду'
