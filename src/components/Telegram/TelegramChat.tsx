@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { chatContact, chatMessages, type ChatItem, type MessageStatus } from '../../data/telegramChat'
 import {
   INCOMING_VOICE_REPLY_DELAY_MS,
@@ -14,6 +15,7 @@ import {
   IconMic,
   IconMicRecording,
   IconPlay,
+  IconProfile,
   VoiceWaveform,
 } from './TelegramIcons'
 
@@ -358,6 +360,10 @@ export function TelegramChat() {
             {recording ? 'запись…' : chatContact.status}
           </p>
         </div>
+
+        <Link to="/taxi" className="mr-1 shrink-0" aria-label="Профиль">
+          <IconProfile />
+        </Link>
       </header>
 
       <div

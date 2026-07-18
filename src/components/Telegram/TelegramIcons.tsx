@@ -1,3 +1,16 @@
+export function IconProfile() {
+  return (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <circle cx="18" cy="18" r="18" fill="#3A5266" />
+      <circle cx="18" cy="14" r="5.5" fill="#6D8698" />
+      <path
+        d="M8.5 28.5c0-5.25 4.25-7.5 9.5-7.5s9.5 2.25 9.5 7.5"
+        fill="#6D8698"
+      />
+    </svg>
+  )
+}
+
 export function IconChevronBack() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
