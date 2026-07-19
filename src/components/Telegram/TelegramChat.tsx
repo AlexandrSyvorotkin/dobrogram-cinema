@@ -361,7 +361,7 @@ export function TelegramChat() {
           </p>
         </div>
 
-        <Link to="/taxi" className="mr-1 shrink-0" aria-label="Профиль">
+        <Link to="/feed" className="mr-1 shrink-0" aria-label="Dobrogram">
           <IconProfile />
         </Link>
       </header>

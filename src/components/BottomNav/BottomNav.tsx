@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
-import { user } from '../../data/mockData'
+import { viewer } from '../../data/mockData'
+import { UserAvatar } from '../UserAvatar'
 import { IconDirect, IconHome, IconReels, IconSearch } from '../icons/Icons'
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -28,7 +29,7 @@ export function BottomNav() {
       </NavLink>
       <NavLink to="/profile" className={navLinkClass} aria-label="Профиль">
         <div className="h-[26px] w-[26px] overflow-hidden rounded-full">
-          <img src={user.avatar} alt="" className="h-full w-full object-cover" />
+          <UserAvatar src={viewer.avatar} />
         </div>
       </NavLink>
     </nav>

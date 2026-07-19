@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
-import { user } from '../../data/mockData'
+import { viewer } from '../../data/mockData'
+import { UserAvatar } from '../UserAvatar'
 import { IconPlus } from '../icons/Icons'
 
 export function Header() {
@@ -16,11 +17,11 @@ export function Header() {
         {/* Dobrogram */}
       </span>
       <NavLink
-        to="/taxi"
+        to="/feed"
         className="h-7 w-7 shrink-0 overflow-hidden rounded-full"
-        aria-label="Профиль"
+        aria-label="Dobrogram"
       >
-        <img src={user.avatar} alt="" className="h-full w-full object-cover" />
+        <UserAvatar src={viewer.avatar} className="h-full w-full object-cover" />
       </NavLink>
     </header>
   )
