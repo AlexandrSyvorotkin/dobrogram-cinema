@@ -14,7 +14,7 @@ export function AppLayout() {
       : pathname === '/'
         ? 'bg-[#0E1621]'
         : isInstagramRoute
-        ? 'bg-black'
+        ? 'bg-white'
         : 'bg-[#F5F5F5]'
 
   return (

@@ -8,5 +8,5 @@ export function UserAvatar({ src, className = 'h-full w-full object-cover' }: Us
     return <img src={src} alt="" className={className} />
   }
 
-  return <div className={`bg-[#363636] ${className}`} aria-hidden="true" />
+  return <div className={`bg-[#efefef] ${className}`} aria-hidden="true" />
 }

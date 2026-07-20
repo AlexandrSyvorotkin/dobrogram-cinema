@@ -5,7 +5,7 @@ import { StoriesBar } from '../components/Stories/StoriesBar'
 export function HomePage() {
   return (
     <>
-      <div className="sticky top-0 z-100 bg-black">
+      <div className="sticky top-0 z-100 bg-white">
         <Header />
         <StoriesBar />
       </div>

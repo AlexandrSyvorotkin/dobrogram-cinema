@@ -28,7 +28,7 @@ export function IconMicRecording() {
 
 export function IconPlay() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M8 5v14l11-7z" />
     </svg>
   )
@@ -58,7 +58,7 @@ export function VoiceWaveform({ bars }: { bars?: number[] }) {
       {displayBars.map((h, i) => (
         <span
           key={i}
-          className={`w-[2px] shrink-0 rounded-full bg-white/70 ${
+          className={`w-[2px] shrink-0 rounded-full bg-black/50 ${
             bars && i >= displayBars.length - 2 ? 'animate-pulse' : ''
           }`}
           style={{ height: `${h}px` }}

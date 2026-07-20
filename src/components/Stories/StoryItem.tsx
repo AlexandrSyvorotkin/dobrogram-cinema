@@ -16,16 +16,16 @@ export function StoryItem({ story }: StoryItemProps) {
   return (
     <div className="flex w-[72px] shrink-0 flex-col items-center gap-1.5">
       <div className={`relative h-[66px] w-[66px] rounded-full p-0.5 ${wrapClass}`}>
-        <div className="h-full w-full overflow-hidden rounded-full border-2 border-black bg-[#262626]">
+        <div className="h-full w-full overflow-hidden rounded-full border-2 border-white bg-[#efefef]">
           <UserAvatar src={story.avatar} />
         </div>
         {story.own && (
-          <div className="absolute right-0 bottom-0 flex h-5 w-5 items-center justify-center rounded-full border-2 border-black bg-[#0095f6]">
+          <div className="absolute right-0 bottom-0 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-[#0095f6]">
             <IconAddSmall />
           </div>
         )}
       </div>
-      <span className="max-w-[72px] truncate text-center text-[11px] text-white">{story.label}</span>
+      <span className="max-w-[72px] truncate text-center text-[11px] text-black">{story.label}</span>
     </div>
   )
 }

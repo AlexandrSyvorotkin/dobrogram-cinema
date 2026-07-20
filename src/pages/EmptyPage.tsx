@@ -4,7 +4,7 @@ type EmptyPageProps = {
 
 export function EmptyPage({ title }: EmptyPageProps) {
   return (
-    <main className="flex flex-1 items-center justify-center pb-[90px] text-[#a8a8a8]">
+    <main className="flex flex-1 items-center justify-center pb-[90px] text-[#737373]">
       {title}
     </main>
   )

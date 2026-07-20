@@ -55,8 +55,8 @@ function createCommentId(): string {
 function TextCommentRow({ comment }: { comment: TextComment }) {
   return (
     <div className="py-0.5 leading-snug">
-      <span className="mr-1.5 text-[13px] font-semibold text-white">{comment.username}</span>
-      <span className="text-[13px] text-white/90">{comment.text}</span>
+      <span className="mr-1.5 text-[13px] font-semibold text-black">{comment.username}</span>
+      <span className="text-[13px] text-black/90">{comment.text}</span>
       <span className="ml-1.5 text-[11px] text-[#8e8e8e]">{comment.time}</span>
     </div>
   )
@@ -65,11 +65,11 @@ function TextCommentRow({ comment }: { comment: TextComment }) {
 function VoiceCommentRow({ comment }: { comment: VoiceComment }) {
   return (
     <div className="flex items-center gap-2 py-1">
-      <span className="shrink-0 text-[13px] font-semibold text-white">{comment.username}</span>
-      <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full bg-[#262626] px-2.5 py-1.5">
+      <span className="shrink-0 text-[13px] font-semibold text-black">{comment.username}</span>
+      <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full bg-[#efefef] px-2.5 py-1.5">
         <button
           type="button"
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/15"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-black/10 text-black"
           aria-label="Воспроизвести голосовой комментарий"
         >
           <IconPlay />
@@ -178,16 +178,16 @@ export const PostComments = forwardRef<HTMLElement>(function PostComments(_props
   }
 
   return (
-    <section ref={sectionRef} className="border-t border-[#262626] px-3 pt-2 pb-3" aria-label="Комментарии">
+    <section ref={sectionRef} className="border-t border-[#dbdbdb] px-3 pt-2 pb-3" aria-label="Комментарии">
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <button type="button" className="p-0 text-white" aria-label="Нравится">
+          <button type="button" className="p-0 text-black" aria-label="Нравится">
             <IconHeart />
           </button>
-          <button type="button" className="p-0 text-white" aria-label="Комментарии" onClick={focusInput}>
+          <button type="button" className="p-0 text-black" aria-label="Комментарии" onClick={focusInput}>
             <IconComment />
           </button>
-          <button type="button" className="p-0 text-white" aria-label="Поделиться">
+          <button type="button" className="p-0 text-black" aria-label="Поделиться">
             <IconShare />
           </button>
         </div>
@@ -216,12 +216,12 @@ export const PostComments = forwardRef<HTMLElement>(function PostComments(_props
       )}
 
       {recording && (
-        <div className="voice-recording-bubble mb-2 flex items-center gap-2 rounded-2xl bg-[#262626] px-3 py-2">
+        <div className="voice-recording-bubble mb-2 flex items-center gap-2 rounded-2xl bg-[#efefef] px-3 py-2">
           <span className="relative flex h-2.5 w-2.5 shrink-0">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff3040] opacity-60" />
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#ff3040]" />
           </span>
-          <span className="min-w-[36px] shrink-0 text-[14px] font-medium tabular-nums text-white">
+          <span className="min-w-[36px] shrink-0 text-[14px] font-medium tabular-nums text-black">
             {formatVoiceDuration(recording.elapsedMs)}
           </span>
           <VoiceWaveform bars={recording.bars} />
@@ -235,7 +235,7 @@ export const PostComments = forwardRef<HTMLElement>(function PostComments(_props
         </div>
 
         {recording ? (
-          <div className="flex min-h-[36px] flex-1 items-center rounded-full bg-[#1a1a1a] px-3.5 py-2">
+          <div className="flex min-h-[36px] flex-1 items-center rounded-full bg-[#efefef] px-3.5 py-2">
             <span className="text-[14px] text-[#8e8e8e]">Запись голосового…</span>
           </div>
         ) : (
@@ -247,7 +247,7 @@ export const PostComments = forwardRef<HTMLElement>(function PostComments(_props
             onChange={(event) => setDraft(event.target.value)}
             onKeyDown={handleInputKeyDown}
             placeholder="Добавьте комментарий…"
-            className="min-h-[36px] flex-1 rounded-full border-0 bg-transparent px-1 text-[14px] text-white outline-none placeholder:text-[#8e8e8e]"
+            className="min-h-[36px] flex-1 rounded-full border-0 bg-transparent px-1 text-[14px] text-black outline-none placeholder:text-[#8e8e8e]"
             autoComplete="off"
           />
         )}
