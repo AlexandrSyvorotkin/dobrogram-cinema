@@ -6,7 +6,7 @@ import { DesktopInstagramSuggestions } from './DesktopInstagramSuggestions'
 export function DesktopInstagram() {
   return (
     <div className="min-h-dvh w-full bg-desktop-shell">
-      <div className="mx-auto flex min-h-dvh w-full max-w-[975px] bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_8px_40px_rgba(0,0,0,0.06)]">
+      <div className="mx-auto flex min-h-dvh w-full max-w-[975px] bg-white">
         <DesktopInstagramNav />
 
         <main className="w-full max-w-[470px] shrink-0 border-x border-[#f0f0f0] pt-8">
