@@ -20,7 +20,7 @@ export function FeedPost({ post }: FeedPostProps) {
     <article className="border-b border-[#dbdbdb]">
       <PostHeader avatar={post.avatar} authors={post.authors} />
       <PostMedia image={post.image} overlayText={post.overlayText} onCommentClick={focusComments} />
-      <PostComments ref={commentsRef} />
+      <PostComments ref={commentsRef} caption={post.caption} />
     </article>
   )
 }

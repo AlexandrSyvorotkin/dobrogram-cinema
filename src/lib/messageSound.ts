@@ -5,7 +5,7 @@ incomingMessageAudio.preload = 'auto'
 
 let unlocked = false
 
-export function unlockTelegramSounds() {
+export function unlockMessageSounds() {
   if (unlocked) return
   unlocked = true
 
@@ -24,7 +24,7 @@ export function unlockTelegramSounds() {
     })
 }
 
-export function playTelegramIncomingSound() {
+export function playIncomingMessageSound() {
   incomingMessageAudio.currentTime = 0
   void incomingMessageAudio.play().catch(() => {})
 }

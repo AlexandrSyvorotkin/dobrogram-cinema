@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom'
 import { AppLayout } from './components/layout/AppLayout'
 import { DirectPage } from './pages/DirectPage'
 import { HomePage } from './pages/HomePage'
-import { MainPage } from './pages/MainPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { TaxiPage } from './pages/TaxiPage'
 import { ReelsPage } from './pages/ReelsPage'
@@ -13,7 +12,7 @@ function App() {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route index element={<MainPage />} />
+        <Route index element={<HomePage />} />
         <Route path="feed" element={<HomePage />} />
         <Route path="reels" element={<ReelsPage />} />
         <Route path="direct" element={<DirectPage />} />

@@ -17,7 +17,7 @@ export function Header() {
         {/* Dobrogram */}
       </span>
       <NavLink
-        to="/feed"
+        to="/"
         className="h-7 w-7 shrink-0 overflow-hidden rounded-full"
         aria-label="Dobrogram"
       >

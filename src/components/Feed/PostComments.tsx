@@ -8,85 +8,71 @@ import {
   useState,
   type FormEvent,
   type KeyboardEvent,
-  type PointerEvent as ReactPointerEvent,
 } from 'react'
 import { profileUser, viewer } from '../../data/mockData'
-import { formatVoiceDuration, useVoiceRecording } from '../../hooks/useVoiceRecording'
 import {
   INCOMING_VOICE_REPLY_DELAY_MS,
   incomingVoiceReplyText,
-  playTelegramIncomingSound,
-  unlockTelegramSounds,
-} from '../../lib/telegramSound'
+  playIncomingMessageSound,
+  unlockMessageSounds,
+} from '../../lib/messageSound'
 import { UserAvatar } from '../UserAvatar'
 import { IconComment, IconHeart, IconShare } from '../icons/Icons'
-import { IconMic, IconMicRecording, IconPlay, IconSend, VoiceWaveform } from './FeedVoiceIcons'
 
 export type TextComment = {
   id: string
-  kind: 'text'
   username: string
   avatar: string | null
   text: string
-  time: string
   own?: boolean
 }
 
-export type VoiceComment = {
-  id: string
-  kind: 'voice'
-  username: string
-  avatar: string | null
-  duration: string
-  time: string
-  own?: boolean
+function IconSend() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
+        stroke="#0095f6"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
 }
 
-export type PostComment = TextComment | VoiceComment
-
-function formatCommentTime(date: Date): string {
-  return date.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', hour12: false })
+function TextCommentRow({ comment }: { comment: TextComment }) {
+  return (
+    <div className="py-1 leading-normal">
+      <span className="mr-2 text-[16px] font-semibold text-black">{comment.username}</span>
+      <span className="text-[16px] text-black/90">{comment.text}</span>
+    </div>
+  )
 }
 
 function createCommentId(): string {
   return `comment-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
 }
 
-function TextCommentRow({ comment }: { comment: TextComment }) {
-  return (
-    <div className="py-0.5 leading-snug">
-      <span className="mr-1.5 text-[13px] font-semibold text-black">{comment.username}</span>
-      <span className="text-[13px] text-black/90">{comment.text}</span>
-      <span className="ml-1.5 text-[11px] text-[#8e8e8e]">{comment.time}</span>
-    </div>
-  )
+function createCaptionComment(text: string): TextComment {
+  return {
+    id: 'caption',
+    username: profileUser.username,
+    avatar: profileUser.avatar,
+    text,
+  }
 }
 
-function VoiceCommentRow({ comment }: { comment: VoiceComment }) {
-  return (
-    <div className="flex items-center gap-2 py-1">
-      <span className="shrink-0 text-[13px] font-semibold text-black">{comment.username}</span>
-      <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full bg-[#efefef] px-2.5 py-1.5">
-        <button
-          type="button"
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-black/10 text-black"
-          aria-label="Воспроизвести голосовой комментарий"
-        >
-          <IconPlay />
-        </button>
-        <VoiceWaveform />
-        <span className="shrink-0 text-[11px] tabular-nums text-[#8e8e8e]">{comment.duration}</span>
-      </div>
-      <span className="shrink-0 text-[11px] text-[#8e8e8e]">{comment.time}</span>
-    </div>
-  )
-}
-
-export const PostComments = forwardRef<HTMLElement>(function PostComments(_props, ref) {
+export const PostComments = forwardRef<HTMLElement, { caption?: string }>(function PostComments(
+  { caption },
+  ref,
+) {
   const sectionRef = useRef<HTMLElement>(null)
   const inputId = useId()
   const inputRef = useRef<HTMLInputElement>(null)
-  const [comments, setComments] = useState<PostComment[]>([])
+  const [comments, setComments] = useState<TextComment[]>(() =>
+    caption ? [createCaptionComment(caption)] : [],
+  )
   const [draft, setDraft] = useState('')
   const replyTimeoutRef = useRef<number | null>(null)
 
@@ -99,20 +85,18 @@ export const PostComments = forwardRef<HTMLElement>(function PostComments(_props
     }
   }, [])
 
-  const scheduleAlenaReply = useCallback(() => {
+  const scheduleAuthorReply = useCallback(() => {
     clearReplyTimeout()
     replyTimeoutRef.current = window.setTimeout(() => {
       replyTimeoutRef.current = null
-      playTelegramIncomingSound()
+      playIncomingMessageSound()
       setComments((prev) => [
         ...prev,
         {
           id: createCommentId(),
-          kind: 'text',
           username: profileUser.username,
           avatar: profileUser.avatar,
           text: incomingVoiceReplyText,
-          time: formatCommentTime(new Date()),
         },
       ])
     }, INCOMING_VOICE_REPLY_DELAY_MS)
@@ -125,44 +109,23 @@ export const PostComments = forwardRef<HTMLElement>(function PostComments(_props
     inputRef.current?.focus()
   }
 
-  const { recording, handleMicPointerDown } = useVoiceRecording((snapshot) => {
-    setComments((prev) => [
-      ...prev,
-      {
-        id: createCommentId(),
-        kind: 'voice',
-        username: viewer.username,
-        avatar: viewer.avatar,
-        duration: formatVoiceDuration(snapshot.elapsedMs),
-        time: formatCommentTime(new Date()),
-        own: true,
-      },
-    ])
-    scheduleAlenaReply()
-  })
-
-  const handleMicDown = (event: ReactPointerEvent<HTMLButtonElement>) => {
-    unlockTelegramSounds()
-    handleMicPointerDown(event)
-  }
-
   const submitTextComment = () => {
     const text = draft.trim()
     if (!text) return
 
+    unlockMessageSounds()
     setComments((prev) => [
       ...prev,
       {
         id: createCommentId(),
-        kind: 'text',
         username: viewer.username,
         avatar: viewer.avatar,
         text,
-        time: formatCommentTime(new Date()),
         own: true,
       },
     ])
     setDraft('')
+    scheduleAuthorReply()
   }
 
   const handleSubmit = (event: FormEvent) => {
@@ -204,28 +167,10 @@ export const PostComments = forwardRef<HTMLElement>(function PostComments(_props
       </div>
 
       {comments.length > 0 && (
-        <div className="mb-2 space-y-0.5">
-          {comments.map((comment) =>
-            comment.kind === 'text' ? (
-              <TextCommentRow key={comment.id} comment={comment} />
-            ) : (
-              <VoiceCommentRow key={comment.id} comment={comment} />
-            ),
-          )}
-        </div>
-      )}
-
-      {recording && (
-        <div className="voice-recording-bubble mb-2 flex items-center gap-2 rounded-2xl bg-[#efefef] px-3 py-2">
-          <span className="relative flex h-2.5 w-2.5 shrink-0">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff3040] opacity-60" />
-            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#ff3040]" />
-          </span>
-          <span className="min-w-[36px] shrink-0 text-[14px] font-medium tabular-nums text-black">
-            {formatVoiceDuration(recording.elapsedMs)}
-          </span>
-          <VoiceWaveform bars={recording.bars} />
-          <span className="ml-auto shrink-0 text-[12px] text-[#8e8e8e]">Отпустите для отправки</span>
+        <div className="mb-2 space-y-1">
+          {comments.map((comment) => (
+            <TextCommentRow key={comment.id} comment={comment} />
+          ))}
         </div>
       )}
 
@@ -234,25 +179,19 @@ export const PostComments = forwardRef<HTMLElement>(function PostComments(_props
           <UserAvatar src={viewer.avatar} />
         </div>
 
-        {recording ? (
-          <div className="flex min-h-[36px] flex-1 items-center rounded-full bg-[#efefef] px-3.5 py-2">
-            <span className="text-[14px] text-[#8e8e8e]">Запись голосового…</span>
-          </div>
-        ) : (
-          <input
-            ref={inputRef}
-            id={inputId}
-            type="text"
-            value={draft}
-            onChange={(event) => setDraft(event.target.value)}
-            onKeyDown={handleInputKeyDown}
-            placeholder="Добавьте комментарий…"
-            className="min-h-[36px] flex-1 rounded-full border-0 bg-transparent px-1 text-[14px] text-black outline-none placeholder:text-[#8e8e8e]"
-            autoComplete="off"
-          />
-        )}
+        <input
+          ref={inputRef}
+          id={inputId}
+          type="text"
+          value={draft}
+          onChange={(event) => setDraft(event.target.value)}
+          onKeyDown={handleInputKeyDown}
+          placeholder="Добавьте комментарий…"
+          className="min-h-[36px] flex-1 rounded-full border-0 bg-transparent px-1 text-[14px] text-black outline-none placeholder:text-[#8e8e8e]"
+          autoComplete="off"
+        />
 
-        {!recording && draft.trim() && (
+        {draft.trim() && (
           <button
             type="submit"
             className="shrink-0 p-1 text-[#0095f6]"
@@ -261,15 +200,6 @@ export const PostComments = forwardRef<HTMLElement>(function PostComments(_props
             <IconSend />
           </button>
         )}
-
-        <button
-          type="button"
-          className="shrink-0 touch-none p-1 select-none"
-          aria-label={recording ? 'Отпустите для отправки' : 'Зажмите для записи голосового'}
-          onPointerDown={handleMicDown}
-        >
-          {recording ? <IconMicRecording /> : <IconMic />}
-        </button>
       </form>
     </section>
   )
