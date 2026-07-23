@@ -13,6 +13,11 @@ export const desktopInstagramSuggestions: SuggestedAccount[] = [
   { id: '5', username: 'hunt_life_ru', subtitle: 'Новое для вас', avatarColor: '#FDCB6E' },
 ]
 
+export const desktopInstagramViewer = {
+  username: 'user284719',
+  avatar: null as string | null,
+}
+
 export const desktopInstagramFooterLinks = [
   'Информация',
   'Помощь',

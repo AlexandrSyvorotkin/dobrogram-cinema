@@ -1,5 +1,4 @@
 import { desktopInstagramFooterLinks, desktopInstagramSuggestions } from '../../data/desktopInstagramMock'
-import { profileUser, viewer } from '../../data/mockData'
 import { UserAvatar } from '../UserAvatar'
 
 function SuggestionAvatar({ username, color }: { username: string; color: string }) {
@@ -16,19 +15,10 @@ function SuggestionAvatar({ username, color }: { username: string; color: string
 export function DesktopInstagramSuggestions() {
   return (
     <aside className="sticky top-0 h-dvh w-[320px] shrink-0 bg-[#fcfcfc] py-8 pl-4 pr-3">
-      <div className="mb-6 flex items-center justify-between gap-3">
-        <div className="flex min-w-0 items-center gap-3">
-          <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full">
-            <UserAvatar src={viewer.avatar} className="h-full w-full object-cover" />
-          </div>
-          <div className="min-w-0">
-            <p className="truncate text-[14px] font-semibold text-black">{viewer.username}</p>
-            <p className="truncate text-[14px] text-[#8e8e8e]">{profileUser.username}</p>
-          </div>
+      <div className="mb-6">
+        <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-[#efefef]">
+          <UserAvatar className="h-full w-full object-cover" />
         </div>
-        <button type="button" className="shrink-0 text-[12px] font-semibold text-[#0095f6]">
-          Сменить
-        </button>
       </div>
 
       <div className="mb-3 flex items-center justify-between">

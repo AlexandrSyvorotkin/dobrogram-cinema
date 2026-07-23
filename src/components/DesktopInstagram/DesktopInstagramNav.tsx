@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { viewer } from '../../data/mockData'
+import { desktopInstagramViewer } from '../../data/desktopInstagramMock'
 import { MODE_SELECTION_PATH } from '../../lib/appPaths'
 import { UserAvatar } from '../UserAvatar'
 import {
@@ -41,9 +41,7 @@ function IconMore() {
 export function DesktopInstagramNav() {
   return (
     <aside className="sticky top-0 flex h-dvh w-[244px] shrink-0 flex-col bg-[#fcfcfc] px-3 py-8">
-      <Link to="/desktop" className="mb-8 px-3 font-instagram text-[28px] leading-none text-black">
-        Dobrogram
-      </Link>
+      <div className="mb-8 h-7" aria-hidden="true" />
 
       <nav className="space-y-1">
         {navItems.map(({ label, icon: Icon, active }) => (
@@ -63,8 +61,8 @@ export function DesktopInstagramNav() {
           type="button"
           className="flex w-full items-center gap-4 rounded-lg px-3 py-3 text-left transition hover:bg-[#f4f4f5]"
         >
-          <div className="h-6 w-6 overflow-hidden rounded-full">
-            <UserAvatar src={viewer.avatar} className="h-full w-full object-cover" />
+          <div className="h-6 w-6 overflow-hidden rounded-full bg-[#efefef]">
+            <UserAvatar src={desktopInstagramViewer.avatar} className="h-full w-full object-cover" />
           </div>
           <span className="text-[16px]">Профиль</span>
         </button>

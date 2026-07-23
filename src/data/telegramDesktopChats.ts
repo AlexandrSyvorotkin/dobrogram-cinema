@@ -27,10 +27,10 @@ export const desktopChatPreviews: DesktopChatPreview[] = [
   },
   {
     id: '3',
-    name: 'Мама',
-    preview: 'Купи хлеб по дороге домой',
+    name: 'Охотбаза «Лесной»',
+    preview: 'Забронировали палатку на выходные',
     time: '14:18',
-    avatarColor: '#FD79A8',
+    avatarColor: '#2D6A4F',
   },
   {
     id: '4',
