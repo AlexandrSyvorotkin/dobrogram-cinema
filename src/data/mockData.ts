@@ -6,7 +6,7 @@ export const profileUser = {
 }
 
 export const viewer = {
-  username: 'Светлана',
+  username: 'Павел',
   avatar: profileAvatar,
 }
 

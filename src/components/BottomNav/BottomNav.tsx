@@ -1,5 +1,6 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { viewer } from '../../data/mockData'
+import { feedPath } from '../../lib/appPaths'
 import { UserAvatar } from '../UserAvatar'
 import { IconDirect, IconHome, IconReels, IconSearch } from '../icons/Icons'
 
@@ -9,12 +10,15 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     : 'relative flex cursor-pointer items-center justify-center p-2 text-black'
 
 export function BottomNav() {
+  const { pathname } = useLocation()
+  const homePath = feedPath(pathname)
+
   return (
     <nav
       className="fixed bottom-5 left-1/2 z-200 flex h-14 w-[calc(100%-32px)] max-w-[398px] -translate-x-1/2 items-center justify-around rounded-[28px] border border-[#dbdbdb] bg-white px-2 shadow-[0_4px_24px_rgba(0,0,0,0.08)]"
       aria-label="Навигация"
     >
-      <NavLink to="/" end className={navLinkClass} aria-label="Главная">
+      <NavLink to={homePath} end className={navLinkClass} aria-label="Главная">
         <IconHome />
       </NavLink>
       <NavLink to="/reels" className={navLinkClass} aria-label="Reels">
