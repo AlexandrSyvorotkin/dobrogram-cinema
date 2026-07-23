@@ -12,7 +12,7 @@ const CAPTIONS: Record<string, string> = {
   'image.png': 'С мужиками на охоте',
   'image1.png': 'Все на рыбалку',
   'img3.png': 'Тишина, вода, клёв',
-  [MAIN_IMAGE]: 'Отчий дом',
+  [MAIN_IMAGE]: 'Отчий дом, деревня Дубки',
 }
 
 function getFileName(path: string): string {
