@@ -20,7 +20,7 @@ export const desktopChatPreviews: DesktopChatPreview[] = [
   {
     id: '2',
     name: 'MortHam',
-    preview: 'Вчера зашла жёсткая ставка 😅',
+    preview: 'Скинул фото с охоты',
     time: '15:32',
     unread: 2,
     avatarColor: '#74B9FF',
