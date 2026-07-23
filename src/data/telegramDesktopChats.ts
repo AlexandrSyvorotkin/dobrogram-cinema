@@ -20,15 +20,15 @@ export const desktopChatPreviews: DesktopChatPreview[] = [
   {
     id: '2',
     name: 'MortHam',
-    preview: 'Скинул фото с охоты',
+    preview: 'По поводу арены позвоню в четверг',
     time: '15:32',
     unread: 2,
     avatarColor: '#74B9FF',
   },
   {
     id: '3',
-    name: 'Охотбаза «Лесной»',
-    preview: 'Забронировали палатку на выходные',
+    name: 'Спорт клуб',
+    preview: 'Тренировки по расписанию',
     time: '14:18',
     avatarColor: '#2D6A4F',
   },
