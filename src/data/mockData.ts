@@ -1,13 +1,13 @@
-import profileAvatar from '../assets/ava.png'
+import profileAvatar from '../assets/new-feed/профил.png'
 
 export const profileUser = {
-  username: 'Павел Никонов',
+  username: 'Алена Соколова',
   avatar: profileAvatar,
 }
 
 export const viewer = {
-  username: 'Павел',
-  avatar: profileAvatar,
+  username: 'Светлана',
+  avatar: null as string | null,
 }
 
 export type Story = {
@@ -33,7 +33,7 @@ export type FeedPostData = {
 }
 
 export const stories: Story[] = [
-  { id: 'own', label: viewer.username, own: true, viewed: false, avatar: profileAvatar },
+  { id: 'own', label: viewer.username, own: true, viewed: false, avatar: null },
   { id: '1', label: 'darinashevtsova_', viewed: true, avatar: 'https://i.pravatar.cc/150?img=5' },
   { id: '2', label: 'anna_brnn', viewed: false, avatar: 'https://i.pravatar.cc/150?img=9' },
   { id: '3', label: 'anton.lyad...', viewed: false, avatar: 'https://i.pravatar.cc/150?img=33' },
