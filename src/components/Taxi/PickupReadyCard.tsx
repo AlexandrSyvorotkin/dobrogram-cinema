@@ -41,7 +41,7 @@ export function PickupReadyCard({ onTakeOrder }: PickupReadyCardProps) {
         onClick={onTakeOrder}
         className="w-full rounded-xl bg-[#FCE000] py-3.5 text-center active:bg-[#F5D800]"
       >
-        <span className="block text-[17px] font-bold text-[#212121]">Взять заказ</span>
+        <span className="block text-[17px] font-bold text-[#212121]">Начать поездку</span>
       </button>
     </div>
   )

@@ -6,7 +6,7 @@ export type TaxiRoutePoint = {
 
 export const TAXI_DEMO_ORDER = {
   pickup: {
-    title: 'проспект Мира, 24',
+    title: 'улица Лобачевского, 17',
     subtitle: 'Энск',
     // Калининский район — север города, без подписи «Новосибирск» в кадре маршрута
     coords: [55.0798, 82.9586] as [number, number],
