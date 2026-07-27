@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { TAXI_DEMO_ORDER } from '../data/taxiOrder'
-import { playTaxiArrivalSound, playTaxiOrderSound, playTaxiRouteSound, unlockTaxiSounds } from '../lib/taxiOrderSound'
+import { playTaxiOrderSound, playTaxiRouteSound, unlockTaxiSounds } from '../lib/taxiOrderSound'
 import { OrderCard } from '../components/Taxi/OrderCard'
 import { OrderCountdownOverlay } from '../components/Taxi/OrderCountdownOverlay'
-import { TripArrivalCard } from '../components/Taxi/TripArrivalCard'
+import { PickupReadyCard } from '../components/Taxi/PickupReadyCard'
 import {
   DriverMarker,
   IconBonus,
@@ -30,7 +30,7 @@ type OrderPhase =
   | 'accepted'
   | 'arrival-countdown'
   | 'arrival-wait'
-  | 'arrived'
+  | 'pickup-ready'
 
 const ORDER_DELAY_AFTER_READY_MS = 5000
 
@@ -91,7 +91,7 @@ function MapOverlays({ onSimulateOrder, onSimulateArrival, showDriverMarker }: M
           type="button"
           onClick={onSimulateArrival}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_2px_10px_rgba(0,0,0,0.14)]"
-          aria-label="Приехали"
+          aria-label="На точке подачи"
         >
           <IconChat size={24} />
         </button>
@@ -188,10 +188,7 @@ export function TaxiPage() {
     }
 
     unlockTaxiSounds()
-    setRoute({
-      from: TAXI_DEMO_ORDER.pickup.coords,
-      to: TAXI_DEMO_ORDER.destination.coords,
-    })
+    setRoute(null)
     setOrderPhase('arrival-countdown')
   }
 
@@ -199,13 +196,16 @@ export function TaxiPage() {
     setOrderPhase('arrival-wait')
   }, [])
 
-  const handleBackToIdle = useCallback(() => {
-    setOrderPhase('idle')
-    setRoute(null)
+  const handleTakeOrderAtPickup = useCallback(() => {
+    setRoute({
+      from: TAXI_DEMO_ORDER.pickup.coords,
+      to: TAXI_DEMO_ORDER.destination.coords,
+    })
+    setOrderPhase('accepted')
   }, [])
 
   const handleSimulateOrder = () => {
-    if (orderPhase !== 'idle' && orderPhase !== 'arrived') return
+    if (orderPhase !== 'idle' && orderPhase !== 'pickup-ready') return
 
     unlockTaxiSounds()
     setRoute(null)
@@ -231,8 +231,7 @@ export function TaxiPage() {
     if (orderPhase !== 'arrival-wait') return
 
     const timer = window.setTimeout(() => {
-      playTaxiArrivalSound()
-      setOrderPhase('arrived')
+      setOrderPhase('pickup-ready')
     }, ORDER_DELAY_AFTER_READY_MS)
 
     return () => clearTimeout(timer)
@@ -254,15 +253,10 @@ export function TaxiPage() {
         <MapOverlays
           onSimulateOrder={handleSimulateOrder}
           onSimulateArrival={handleSimulateArrival}
-          showDriverMarker={
-            orderPhase !== 'accepted' &&
-            orderPhase !== 'arrived' &&
-            orderPhase !== 'arrival-countdown' &&
-            orderPhase !== 'arrival-wait'
-          }
+          showDriverMarker={orderPhase !== 'accepted' && orderPhase !== 'arrival-countdown' && orderPhase !== 'arrival-wait'}
         />
         {orderPhase === 'incoming' && <OrderCard onAccept={handleAcceptOrder} />}
-        {orderPhase === 'arrived' && <TripArrivalCard onTakeAnotherOrder={handleBackToIdle} />}
+        {orderPhase === 'pickup-ready' && <PickupReadyCard onTakeOrder={handleTakeOrderAtPickup} />}
       </div>
 
       {(orderPhase === 'idle' || orderPhase === 'ready-wait' || orderPhase === 'arrival-wait') && (
@@ -272,7 +266,7 @@ export function TaxiPage() {
         </div>
       )}
 
-      {orderPhase !== 'arrived' &&
+      {orderPhase !== 'pickup-ready' &&
         orderPhase !== 'incoming' &&
         orderPhase !== 'arrival-wait' &&
         orderPhase !== 'arrival-countdown' && <TaxiBottomNav />}
