@@ -1,11 +1,14 @@
 import orderSound from '../assets/taxi/заказ.mp3'
 import routeSound from '../assets/taxi/маршрут.mp3'
+import arrivalSound from '../assets/taxi/end.mp3'
 
 const orderAudio = new Audio(orderSound)
 const routeAudio = new Audio(routeSound)
+const arrivalAudio = new Audio(arrivalSound)
 
 orderAudio.preload = 'auto'
 routeAudio.preload = 'auto'
+arrivalAudio.preload = 'auto'
 
 let unlocked = false
 
@@ -14,7 +17,7 @@ export function unlockTaxiSounds() {
   if (unlocked) return
   unlocked = true
 
-  for (const audio of [orderAudio, routeAudio]) {
+  for (const audio of [orderAudio, routeAudio, arrivalAudio]) {
     audio.volume = 0
     const playPromise = audio.play()
     if (!playPromise) continue
@@ -42,4 +45,8 @@ export function playTaxiOrderSound() {
 
 export function playTaxiRouteSound() {
   playSound(routeAudio)
+}
+
+export function playTaxiArrivalSound() {
+  playSound(arrivalAudio)
 }

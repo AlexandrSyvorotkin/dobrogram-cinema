@@ -6,17 +6,17 @@ export type TaxiRoutePoint = {
 
 export const TAXI_DEMO_ORDER = {
   pickup: {
-    title: 'улица Бессемера, 8',
+    title: 'проспект Мира, 24',
     subtitle: 'Энск',
     // Калининский район — север города, без подписи «Новосибирск» в кадре маршрута
     coords: [55.0798, 82.9586] as [number, number],
   },
   destination: {
-    title: 'улица Лобачевского, 17',
-    subtitle: 'Э',
+    title: 'улица Садовая, 5',
+    subtitle: 'Энск',
     coords: [55.0656, 82.9274] as [number, number],
   },
-  price: '512 ₽',
+  price: '387 ₽',
   etaMinutes: 7,
   surge: '× 1.2',
   tariff: 'Экспресс',

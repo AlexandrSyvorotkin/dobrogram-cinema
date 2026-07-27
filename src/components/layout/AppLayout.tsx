@@ -7,7 +7,7 @@ import { RouteSwitcher } from '../RouteSwitcher/RouteSwitcher'
 const MOBILE_INSTAGRAM_ROUTES = ['/feed', '/reels', '/direct', '/search', '/profile']
 const MODE_SELECTION_ROUTE = '/'
 const DESKTOP_INSTAGRAM_ROUTES = ['/desktop']
-const MOBILE_FULLSCREEN_ROUTES = ['/telegram']
+const MOBILE_FULLSCREEN_ROUTES = ['/telegram', '/taxi']
 
 export function AppLayout() {
   const { pathname } = useLocation()

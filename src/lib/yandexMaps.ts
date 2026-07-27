@@ -1,6 +1,6 @@
 const YANDEX_MAPS_SCRIPT_ID = 'yandex-maps-script'
 
-/** Новосибирск (Калининский район) — в интерфейсе город подписан как Энск */
+/** Новосибирск (Калининский район) — в интерфейсе такси город подписан как Энск */
 export const TAXI_FALLBACK_POSITION: [number, number] = [55.0798, 82.9586]
 
 export function buildMapWidgetUrl([lat, lon]: [number, number], zoom = 16) {

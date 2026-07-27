@@ -22,6 +22,13 @@ export const appRouteOptions: AppRouteOption[] = [
     device: 'phone',
   },
   {
+    id: 'mobile-taxi',
+    label: 'Такси',
+    description: 'Приложение для водителей',
+    path: '/taxi',
+    device: 'phone',
+  },
+  {
     id: 'desktop-instagram',
     label: 'Instagram',
     description: 'Лента на компьютере',

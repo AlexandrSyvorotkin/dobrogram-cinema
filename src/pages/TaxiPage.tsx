@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { TAXI_DEMO_ORDER } from '../data/taxiOrder'
-import { playTaxiOrderSound, playTaxiRouteSound, unlockTaxiSounds } from '../lib/taxiOrderSound'
+import { playTaxiArrivalSound, playTaxiOrderSound, playTaxiRouteSound, unlockTaxiSounds } from '../lib/taxiOrderSound'
 import { OrderCard } from '../components/Taxi/OrderCard'
 import { OrderCountdownOverlay } from '../components/Taxi/OrderCountdownOverlay'
+import { TripArrivalCard } from '../components/Taxi/TripArrivalCard'
 import {
   DriverMarker,
   IconBonus,
@@ -21,27 +22,35 @@ import {
 import { TaxiYandexMap } from '../components/Taxi/TaxiYandexMap'
 import type { TaxiMapRoute } from '../lib/yandexMaps'
 
-type OrderPhase = 'idle' | 'countdown' | 'ready-wait' | 'incoming' | 'accepted'
+type OrderPhase =
+  | 'idle'
+  | 'countdown'
+  | 'ready-wait'
+  | 'incoming'
+  | 'accepted'
+  | 'arrival-countdown'
+  | 'arrival-wait'
+  | 'arrived'
 
 const ORDER_DELAY_AFTER_READY_MS = 5000
 
 type MapOverlaysProps = {
   onSimulateOrder: () => void
-  onReset: () => void
+  onSimulateArrival: () => void
   showDriverMarker: boolean
 }
 
-function MapOverlays({ onSimulateOrder, onReset, showDriverMarker }: MapOverlaysProps) {
+function MapOverlays({ onSimulateOrder, onSimulateArrival, showDriverMarker }: MapOverlaysProps) {
   return (
     <>
       <div className="absolute top-3 right-0 left-0 z-10 flex items-center justify-between px-3">
-        <button
-          type="button"
+        <NavLink
+          to="/"
           className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_2px_10px_rgba(0,0,0,0.14)]"
           aria-label="Меню"
         >
           <IconMenu size={24} />
-        </button>
+        </NavLink>
 
         <button
           type="button"
@@ -80,9 +89,9 @@ function MapOverlays({ onSimulateOrder, onReset, showDriverMarker }: MapOverlays
       <div className="absolute top-[88px] right-3 z-10 flex flex-col gap-3">
         <button
           type="button"
-          onClick={onReset}
+          onClick={onSimulateArrival}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_2px_10px_rgba(0,0,0,0.14)]"
-          aria-label="Сбросить"
+          aria-label="Приехали"
         >
           <IconChat size={24} />
         </button>
@@ -167,15 +176,39 @@ export function TaxiPage() {
   const [orderPhase, setOrderPhase] = useState<OrderPhase>('idle')
   const [route, setRoute] = useState<TaxiMapRoute | null>(null)
 
-  const handleReset = () => {
-    setOrderPhase('idle')
-    setRoute(null)
-  }
-
-  const handleSimulateOrder = () => {
-    if (orderPhase !== 'idle') return
+  const handleSimulateArrival = () => {
+    if (
+      orderPhase === 'countdown' ||
+      orderPhase === 'ready-wait' ||
+      orderPhase === 'incoming' ||
+      orderPhase === 'arrival-countdown' ||
+      orderPhase === 'arrival-wait'
+    ) {
+      return
+    }
 
     unlockTaxiSounds()
+    setRoute({
+      from: TAXI_DEMO_ORDER.pickup.coords,
+      to: TAXI_DEMO_ORDER.destination.coords,
+    })
+    setOrderPhase('arrival-countdown')
+  }
+
+  const handleArrivalCountdownReady = useCallback(() => {
+    setOrderPhase('arrival-wait')
+  }, [])
+
+  const handleBackToIdle = useCallback(() => {
+    setOrderPhase('idle')
+    setRoute(null)
+  }, [])
+
+  const handleSimulateOrder = () => {
+    if (orderPhase !== 'idle' && orderPhase !== 'arrived') return
+
+    unlockTaxiSounds()
+    setRoute(null)
     setOrderPhase('countdown')
   }
 
@@ -189,6 +222,17 @@ export function TaxiPage() {
     const timer = window.setTimeout(() => {
       playTaxiOrderSound()
       setOrderPhase('incoming')
+    }, ORDER_DELAY_AFTER_READY_MS)
+
+    return () => clearTimeout(timer)
+  }, [orderPhase])
+
+  useEffect(() => {
+    if (orderPhase !== 'arrival-wait') return
+
+    const timer = window.setTimeout(() => {
+      playTaxiArrivalSound()
+      setOrderPhase('arrived')
     }, ORDER_DELAY_AFTER_READY_MS)
 
     return () => clearTimeout(timer)
@@ -209,23 +253,34 @@ export function TaxiPage() {
         <TaxiYandexMap route={route} />
         <MapOverlays
           onSimulateOrder={handleSimulateOrder}
-          onReset={handleReset}
-          showDriverMarker={orderPhase !== 'accepted'}
+          onSimulateArrival={handleSimulateArrival}
+          showDriverMarker={
+            orderPhase !== 'accepted' &&
+            orderPhase !== 'arrived' &&
+            orderPhase !== 'arrival-countdown' &&
+            orderPhase !== 'arrival-wait'
+          }
         />
         {orderPhase === 'incoming' && <OrderCard onAccept={handleAcceptOrder} />}
+        {orderPhase === 'arrived' && <TripArrivalCard onTakeAnotherOrder={handleBackToIdle} />}
       </div>
 
-      {(orderPhase === 'idle' || orderPhase === 'ready-wait') && (
+      {(orderPhase === 'idle' || orderPhase === 'ready-wait' || orderPhase === 'arrival-wait') && (
         <div className="relative z-20 -mt-3 shrink-0 space-y-2 pb-2">
           <StatsGrid />
           <BonusesCard />
         </div>
       )}
 
-      <TaxiBottomNav />
+      {orderPhase !== 'arrived' &&
+        orderPhase !== 'incoming' &&
+        orderPhase !== 'arrival-wait' &&
+        orderPhase !== 'arrival-countdown' && <TaxiBottomNav />}
 
-      {orderPhase === 'countdown' && (
-        <OrderCountdownOverlay onReady={handleCountdownReady} />
+      {orderPhase === 'countdown' && <OrderCountdownOverlay onReady={handleCountdownReady} />}
+
+      {orderPhase === 'arrival-countdown' && (
+        <OrderCountdownOverlay onReady={handleArrivalCountdownReady} />
       )}
     </div>
   )
