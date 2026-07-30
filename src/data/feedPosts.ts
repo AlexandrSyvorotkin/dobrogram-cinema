@@ -1,16 +1,4 @@
-import type { FeedPostData } from './mockData'
-import { profileUser } from './mockData'
+import { alenaProfile } from './dobrogram/profiles/alena'
 
-const images = import.meta.glob<string>('../assets/new-feed/*.{jpg,JPG,jpeg,JPEG}', {
-  eager: true,
-  import: 'default',
-})
-
-export const feedPosts: FeedPostData[] = Object.entries(images)
-  .sort(([a], [b]) => b.localeCompare(a))
-  .map(([path, image]) => ({
-    id: path,
-    avatar: profileUser.avatar,
-    authors: [{ username: profileUser.username, verified: true }],
-    image,
-  }))
+export type { FeedPostData } from './dobrogram'
+export const feedPosts = alenaProfile.feedPosts

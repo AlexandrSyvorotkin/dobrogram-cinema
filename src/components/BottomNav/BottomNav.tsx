@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom'
-import { viewer } from '../../data/mockData'
-import { feedPath } from '../../lib/appPaths'
+import { useDobrogramProfile } from '../../context/DobrogramProfileContext'
+import { feedPath, profilePath } from '../../lib/appPaths'
 import { UserAvatar } from '../UserAvatar'
 import { IconDirect, IconHome, IconReels, IconSearch } from '../icons/Icons'
 
@@ -11,6 +11,7 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 
 export function BottomNav() {
   const { pathname } = useLocation()
+  const { viewer } = useDobrogramProfile()
   const homePath = feedPath(pathname)
 
   return (
@@ -21,17 +22,17 @@ export function BottomNav() {
       <NavLink to={homePath} end className={navLinkClass} aria-label="Главная">
         <IconHome />
       </NavLink>
-      <NavLink to="/reels" className={navLinkClass} aria-label="Reels">
+      <NavLink to={profilePath(pathname, 'reels')} className={navLinkClass} aria-label="Reels">
         <IconReels />
       </NavLink>
-      <NavLink to="/direct" className={navLinkClass} aria-label="Сообщения">
+      <NavLink to={profilePath(pathname, 'direct')} className={navLinkClass} aria-label="Сообщения">
         <IconDirect />
         <span className="absolute right-1 bottom-1.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-white bg-[#ff3040]" />
       </NavLink>
-      <NavLink to="/search" className={navLinkClass} aria-label="Поиск">
+      <NavLink to={profilePath(pathname, 'search')} className={navLinkClass} aria-label="Поиск">
         <IconSearch />
       </NavLink>
-      <NavLink to="/profile" className={navLinkClass} aria-label="Профиль">
+      <NavLink to={profilePath(pathname, 'profile')} className={navLinkClass} aria-label="Профиль">
         <div className="h-[26px] w-[26px] overflow-hidden rounded-full">
           <UserAvatar src={viewer.avatar} />
         </div>

@@ -1,4 +1,6 @@
-import type { FeedPostData } from '../../data/mockData'
+import { useRef } from 'react'
+import type { FeedPostData } from '../../data/dobrogram'
+import { PostComments } from './PostComments'
 import { PostHeader } from './PostHeader'
 import { PostMedia } from './PostMedia'
 
@@ -7,10 +9,29 @@ type FeedPostProps = {
 }
 
 export function FeedPost({ post }: FeedPostProps) {
+  const commentsRef = useRef<HTMLElement>(null)
+  const hasComments = Boolean(post.comments?.length || post.caption)
+
+  const focusComments = () => {
+    commentsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    commentsRef.current?.querySelector('input')?.focus()
+  }
+
   return (
     <article className="border-b border-[#dbdbdb]">
       <PostHeader avatar={post.avatar} authors={post.authors} />
-      <PostMedia image={post.image} overlayText={post.overlayText} />
+      <PostMedia
+        image={post.image}
+        overlayText={post.overlayText}
+        onCommentClick={hasComments ? focusComments : undefined}
+      />
+      {hasComments && (
+        <PostComments
+          ref={commentsRef}
+          comments={post.comments}
+          caption={post.caption}
+        />
+      )}
     </article>
   )
 }

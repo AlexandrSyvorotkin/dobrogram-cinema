@@ -1,4 +1,4 @@
-import type { FeedPostData } from '../../data/mockData'
+import type { FeedPostData } from '../../data/dobrogram'
 import { IconDots, IconVerified } from '../icons/Icons'
 
 type PostHeaderProps = {

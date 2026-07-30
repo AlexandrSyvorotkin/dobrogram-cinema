@@ -1,10 +1,12 @@
+import { useDobrogramProfile } from '../../context/DobrogramProfileContext'
 import { Feed } from '../Feed/Feed'
-import { stories } from '../../data/mockData'
 import { StoriesBar } from '../Stories/StoriesBar'
 import { DesktopInstagramNav } from './DesktopInstagramNav'
 import { DesktopInstagramSuggestions } from './DesktopInstagramSuggestions'
 
 export function DesktopInstagram() {
+  const { stories } = useDobrogramProfile()
+
   return (
     <div className="min-h-dvh w-full bg-desktop-shell">
       <div className="mx-auto flex min-h-dvh w-full max-w-[975px] bg-white">

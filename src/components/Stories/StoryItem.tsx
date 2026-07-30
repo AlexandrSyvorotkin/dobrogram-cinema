@@ -1,4 +1,4 @@
-import type { Story } from '../../data/mockData'
+import type { Story } from '../../data/dobrogram'
 import { UserAvatar } from '../UserAvatar'
 import { IconAddSmall } from '../icons/Icons'
 

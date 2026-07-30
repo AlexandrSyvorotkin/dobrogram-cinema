@@ -1,11 +1,12 @@
 import { NavLink, useLocation } from 'react-router-dom'
-import { viewer } from '../../data/mockData'
+import { useDobrogramProfile } from '../../context/DobrogramProfileContext'
 import { telegramPath } from '../../lib/appPaths'
 import { UserAvatar } from '../UserAvatar'
 import { IconPlus } from '../icons/Icons'
 
 export function Header() {
   const { pathname } = useLocation()
+  const { viewer } = useDobrogramProfile()
 
   return (
     <header className="flex h-11 items-center justify-between bg-white px-4 py-2.5">
