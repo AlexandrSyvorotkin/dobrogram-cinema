@@ -44,7 +44,7 @@ export function AppLayout() {
 
     const layoutBg =
       pathname === '/news'
-        ? 'bg-white'
+        ? 'bg-[#FAF9F6]'
         : pathname === '/taxi'
           ? 'bg-[#F5F5F5]'
           : pathname === '/telegram'

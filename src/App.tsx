@@ -6,7 +6,7 @@ import { HomePage } from './pages/HomePage'
 import { ProfilePage } from './pages/ProfilePage'
 import { TaxiPage } from './pages/TaxiPage'
 import { ReelsPage } from './pages/ReelsPage'
-import { NewsArticlePage } from './pages/NewsArticlePage'
+import { EnskyVestnikPage } from './pages/EnskyVestnikPage'
 import { DesktopHomePage } from './pages/DesktopHomePage'
 import { MainPage } from './pages/MainPage'
 import { ModeSelectionPage } from './pages/ModeSelectionPage'
@@ -35,7 +35,7 @@ function App() {
         <Route path="telegram" element={<MainPage />} />
         <Route path="desktop/telegram" element={<MainPage />} />
         <Route path="taxi" element={<TaxiPage />} />
-        <Route path="news" element={<NewsArticlePage />} />
+        <Route path="news" element={<EnskyVestnikPage />} />
       </Route>
     </Routes>
   )

@@ -36,6 +36,13 @@ export const appRouteOptions: AppRouteOption[] = [
     device: 'phone',
   },
   {
+    id: 'mobile-ensky-vestnik',
+    label: 'Энский вестник',
+    description: 'Городская газета',
+    path: '/news',
+    device: 'phone',
+  },
+  {
     id: 'desktop-instagram-alena',
     label: 'Профиль Алена',
     description: 'Лента на компьютере',
@@ -78,6 +85,10 @@ export function isRouteActive(pathname: string, path: string): boolean {
 
   if (path === '/vika/desktop') {
     return pathname === '/vika/desktop'
+  }
+
+  if (path === '/news') {
+    return pathname === '/news'
   }
 
   return false
