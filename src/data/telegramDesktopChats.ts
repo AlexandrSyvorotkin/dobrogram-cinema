@@ -11,8 +11,8 @@ export type DesktopChatPreview = {
 export const desktopChatPreviews: DesktopChatPreview[] = [
   {
     id: 'active',
-    name: 'Бывший Козел',
-    preview: 'Тварь, тебе жить надоело',
+    name: 'Администрация города энск',
+    preview: 'Объявляется тендер на озеленение городского пространства...',
     time: '15:09',
     active: true,
     avatarColor: '#E17055',
