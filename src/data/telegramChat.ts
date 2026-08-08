@@ -6,7 +6,7 @@ export type ChatItem = {
 }
 
 export const chatContact = {
-  name: 'Администрация города энск',
+  name: 'Администрация города Энск',
   status: 'был(а) недавно',
   unreadCount: 0,
 }
