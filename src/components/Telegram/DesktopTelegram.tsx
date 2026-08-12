@@ -54,7 +54,12 @@ export function DesktopTelegram() {
               }`}
             >
               <div className="h-[76px] w-[76px] shrink-0 overflow-hidden rounded-full">
-                <ChatAvatar name={chat.name} color={chat.avatarColor} large />
+                <ChatAvatar
+                  name={chat.name}
+                  color={chat.avatarColor}
+                  src={chat.active ? chatContact.avatar : undefined}
+                  large
+                />
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline justify-between gap-2">
@@ -84,7 +89,7 @@ export function DesktopTelegram() {
       <section className="flex min-w-0 flex-1 flex-col bg-[#D9FDD3]">
         <header className="flex shrink-0 items-center gap-4 border-b border-[#dfe3e8] bg-white px-6 py-4">
           <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full">
-            <ChatAvatar name={chatContact.name} color="#E17055" large />
+            <ChatAvatar name={chatContact.name} color="#E17055" src={chatContact.avatar} large />
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-[22px] font-semibold text-black">{chatContact.name}</p>

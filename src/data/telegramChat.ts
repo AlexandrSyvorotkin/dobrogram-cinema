@@ -1,35 +1,82 @@
-export type ChatItem = {
-  kind: 'text'
-  text: string
-  outgoing: boolean
-  tail?: boolean
-}
+import woman1 from '../assets/feed/woman/1.jpg'
+import woman23 from '../assets/feed/woman/23.jpg'
+import woman45 from '../assets/feed/woman/45.png'
+import woman5 from '../assets/feed/woman/5.png'
+import womanNew1 from '../assets/feed/woman/3666250c50ee4e4cbd2ec7a86b868665.max-2500x1500.jpg'
+import womanNew2 from '../assets/feed/woman/Screenshot_1.png'
+import womanNew3 from '../assets/feed/woman/ChatGPT Image 12 авг. 2026 г., 15_50_11.png'
+
+export type ChatItem =
+  | {
+      kind: 'text'
+      text: string
+      outgoing: boolean
+      tail?: boolean
+    }
+  | {
+      kind: 'photo'
+      image: string
+      caption: string
+      time: string
+      outgoing: boolean
+      tail?: boolean
+    }
 
 export const chatContact = {
-  name: 'Администрация города Энск',
-  status: 'был(а) недавно',
+  name: 'Жукова Жанна',
+  status: 'группа',
+  avatar: woman1,
   unreadCount: 0,
 }
 
 export const chatMessages: ChatItem[] = [
   {
-    kind: 'text',
-    text: 'Открыта предварительная запись приёма граждан по личным вопросам на июль. С актуальным расписанием приёма на июнь можно ознакомиться на сайте администрации города.',
+    kind: 'photo',
+    image: womanNew1,
+    caption: 'Закат на лазурном берегу ❤️',
+    time: 'вчера 18:12',
     outgoing: false,
   },
   {
-    kind: 'text',
-    text: 'Отборочный тур участников проекта «Сильные идеи для нового времени» закончен! Благодарим всех участников! Финальный список проектов допущенных к следующему этапу конкурса будет опубликован на сайте администрации до конца месяца.',
+    kind: 'photo',
+    image: womanNew2,
+    caption: 'Ужин в лучшем ресторане Энска ⭐',
+    time: 'вчера 19:05',
     outgoing: false,
   },
   {
-    kind: 'text',
-    text: 'Итоги общегородского субботника Энска впечатляют! Участниками масштабной уборки стали более 2 тысяч человек! В субботнике было задействовано 160 единиц техники, в том числе 57 автотранспортных средств! В рамках субботника в городе выполнена санитарная обрезка деревьев и кустарников, очищены прибордюрные полосы!',
+    kind: 'photo',
+    image: womanNew3,
+    caption: 'Энск не просто город !',
+    time: 'вчера 20:33',
     outgoing: false,
   },
   {
-    kind: 'text',
-    text: 'Объявляется тендер на озеленение городского пространства района Александровский города Энска! Цель данного тендера – улучшение экологической обстановки и создание комфортной городской среды для жителей. С подробной информацией об основных требованиях и сроках подачи проектов можно ознакомиться на сайте администрации! Мы ждем ваши заявки и надеемся на плодотворное сотрудничество!',
+    kind: 'photo',
+    image: woman1,
+    caption: 'Одна за всех тружусь в ночи, спасаю жизни!',
+    time: '00:15',
+    outgoing: false,
+  },
+  {
+    kind: 'photo',
+    image: woman23,
+    caption: 'Ваша любимая Медсестра! ❤️',
+    time: '00:18',
+    outgoing: false,
+  },
+  {
+    kind: 'photo',
+    image: woman45,
+    caption: '💉🩺💊🏥❤️',
+    time: '00:20',
+    outgoing: false,
+  },
+  {
+    kind: 'photo',
+    image: woman5,
+    caption: '👩‍⚕️🩹🚑✨💪',
+    time: '00:25',
     outgoing: false,
     tail: true,
   },
