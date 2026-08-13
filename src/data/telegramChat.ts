@@ -2,7 +2,7 @@ import woman1 from '../assets/feed/woman/1.jpg'
 import woman23 from '../assets/feed/woman/23.jpg'
 import woman45 from '../assets/feed/woman/45.png'
 import woman5 from '../assets/feed/woman/5.png'
-import womanNew1 from '../assets/feed/woman/ChatGPT Image 13 авг. 2026 г., 12_17_53.png'
+import womanNew1 from '../assets/feed/woman/ChatGPT Image 13 авг. 2026 г., 12_48_08.png'
 import womanNew2 from '../assets/feed/woman/Screenshot_1.png'
 import womanNew3 from '../assets/feed/woman/ChatGPT Image 12 авг. 2026 г., 15_50_11.png'
 
