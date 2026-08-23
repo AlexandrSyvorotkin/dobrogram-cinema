@@ -72,15 +72,17 @@ function PhotoBubble({
           className="block h-auto w-full object-contain"
         />
         <div className={large ? 'px-5 py-3' : 'px-3 py-2'}>
-          <div
-            className={`min-h-[1.25em] whitespace-pre-wrap text-black ${
-              large ? 'text-[36px] leading-[44px]' : 'text-[26px] leading-[32px]'
-            }`}
-          >
-            {caption || '\u00A0'}
-          </div>
+          {caption ? (
+            <div
+              className={`whitespace-pre-wrap text-black ${
+                large ? 'text-[36px] leading-[44px]' : 'text-[26px] leading-[32px]'
+              }`}
+            >
+              {caption}
+            </div>
+          ) : null}
           <p
-            className={`mt-1 text-right text-[#6B8E6B] ${
+            className={`text-right text-[#6B8E6B] ${caption ? 'mt-1' : ''} ${
               large ? 'text-[16px] leading-5' : 'text-[12px] leading-4'
             }`}
           >

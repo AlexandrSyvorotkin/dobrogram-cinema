@@ -1,10 +1,8 @@
 import woman1 from '../assets/feed/woman/1.jpg'
-import woman23 from '../assets/feed/woman/23.jpg'
-import woman45 from '../assets/feed/woman/45.png'
-import woman5 from '../assets/feed/woman/5.png'
 import womanNew1 from '../assets/feed/woman/ChatGPT Image 13 авг. 2026 г., 12_48_08.png'
 import womanNew2 from '../assets/feed/woman/Screenshot_1.png'
 import womanNew3 from '../assets/feed/woman/ChatGPT Image 12 авг. 2026 г., 15_50_11.png'
+import womanFoto1 from '../assets/feed/woman/фото1.png'
 
 export type ChatItem =
   | {
@@ -53,30 +51,9 @@ export const chatMessages: ChatItem[] = [
   },
   {
     kind: 'photo',
-    image: woman1,
-    caption: 'Одна за всех тружусь в ночи, спасаю жизни!',
-    time: 'сегодня 00:15',
-    outgoing: false,
-  },
-  {
-    kind: 'photo',
-    image: woman23,
-    caption: 'Ваша любимая Медсестра! ❤️',
-    time: 'сегодня 00:18',
-    outgoing: false,
-  },
-  {
-    kind: 'photo',
-    image: woman45,
-    caption: '💉🩺💊🏥❤️',
-    time: 'сегодня 00:20',
-    outgoing: false,
-  },
-  {
-    kind: 'photo',
-    image: woman5,
-    caption: '👩‍⚕️🩹🚑✨💪',
-    time: 'сегодня 00:25',
+    image: womanFoto1,
+    caption: '',
+    time: 'сегодня',
     outgoing: false,
     tail: true,
   },
