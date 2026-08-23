@@ -15,7 +15,7 @@ export type ChatItem =
       kind: 'photo'
       image: string
       caption: string
-      time: string
+      time?: string
       outgoing: boolean
       tail?: boolean
     }
@@ -32,21 +32,18 @@ export const chatMessages: ChatItem[] = [
     kind: 'photo',
     image: womanNew1,
     caption: 'Прогулка по Энску ☀️',
-    time: 'вчера 18:12',
     outgoing: false,
   },
   {
     kind: 'photo',
     image: womanNew2,
     caption: 'Ужин в лучшем ресторане Энска ⭐',
-    time: 'вчера 19:05',
     outgoing: false,
   },
   {
     kind: 'photo',
     image: womanNew3,
     caption: 'Энск не просто город !',
-    time: 'вчера 20:33',
     outgoing: false,
   },
   {
